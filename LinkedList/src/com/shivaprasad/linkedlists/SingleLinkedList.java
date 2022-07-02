@@ -5,6 +5,7 @@ package com.shivaprasad.linkedlists;
 public class SingleLinkedList {
 
     Node head;
+    //Helps to know current List size.
     static int size = 0;
     static class Node {
         int val;
@@ -82,10 +83,10 @@ public class SingleLinkedList {
         Node new_node = new Node(val);
         if(head == null) {
             head = new_node;
-            return;
+        } else {
+            new_node.next = head;
+            head = new_node;
         }
-        new_node.next = head;
-        head = new_node;
         size++;
     }
 
@@ -111,15 +112,15 @@ public class SingleLinkedList {
         if(position == 0) {
             node.next = head;
             head = node;
-            return;
+        } else {
+            Node currNode = head;
+            for(int i=0;i<position-1;i++) {
+                currNode = currNode.next;
+            }
+            Node temp = currNode.next;
+            currNode.next = node;
+            node.next = temp;
         }
-        Node currNode = head;
-        for(int i=0;i<position-1;i++) {
-            currNode = currNode.next;
-        }
-        Node temp = currNode.next;
-        currNode.next = node;
-        node.next = temp;
         size++;
     }
 
@@ -137,15 +138,15 @@ public class SingleLinkedList {
     void deleteAtEnd() {
         if(head == null || head.next == null) {
             head = null;
-            return;
+        } else {
+            Node currNode = head;
+            Node prevNode = null;
+            while(currNode.next!=null) {
+                prevNode = currNode;
+                currNode = currNode.next;
+            }
+            prevNode.next = currNode.next;
         }
-        Node currNode = head;
-        Node prevNode = null;
-        while(currNode.next!=null) {
-            prevNode = currNode;
-            currNode = currNode.next;
-        }
-        prevNode.next = currNode.next;
         size--;
     }
 
@@ -156,15 +157,16 @@ public class SingleLinkedList {
             Node node = head;
             head = node.next;
             node.next = null;
-            return;
+
+        } else {
+            Node currNode = head;
+            Node prevNode = null;
+            for(int i=0;i<position;i++) {
+                prevNode = currNode;
+                currNode = currNode.next;
+            }
+            prevNode.next = currNode.next;
         }
-        Node currNode = head;
-        Node prevNode = null;
-        for(int i=0;i<position;i++) {
-            prevNode = currNode;
-            currNode = currNode.next;
-        }
-        prevNode.next = currNode.next;
         size--;
     }
 }
